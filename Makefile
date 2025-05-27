@@ -16,6 +16,9 @@ build/%.o: src/%.cpp | build
 build/main.o: main.cpp | build
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c main.cpp -o build/main.o
 
+build:
+	mkdir -p build
+
 clean:
 	rm -rf build $(TARGET)
 
