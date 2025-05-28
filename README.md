@@ -4,7 +4,7 @@
 
 Este projeto consiste em um sistema, desenvolvido em **C++**, para ajudar usuários a gerenciar assinaturas de serviços de streaming.  
 Ele permite organizar assinaturas, controlar custos mensais e gerar lembretes de renovação.
-Veja mais detalhes no arquivo "UserStories.md".
+Veja mais detalhes no arquivo **`docs/UserStories.md`**.
 ---
 
 ## Requisitos
