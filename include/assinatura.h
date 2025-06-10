@@ -19,6 +19,8 @@ public:
     void setNome(const std::string& nome);
     void setValor(double valor);
     void setDiaRenovacao(int dia);
+
+    void exibir() const;
 };
 
 #endif
