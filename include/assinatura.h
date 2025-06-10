@@ -5,9 +5,9 @@
 
 class Assinatura {
 private:
-    std::string nome;
-    double valor;
-    int diaRenovacao;
+    std::string nome_;
+    double valor_;
+    int diaRenovacao_;
 
 public:
     Assinatura(std::string nome, double valor, int diaRenovacao);
@@ -16,11 +16,9 @@ public:
     double getValor() const;
     int getDiaRenovacao() const;
 
-    void setNome(std::string novoNome);
-    void setValor(double novoValor);
-    void setDiaRenovacao(int novoDia);
-
-    void exibir() const;
+    void setNome(const std::string& nome);
+    void setValor(double valor);
+    void setDiaRenovacao(int dia);
 };
 
 #endif
