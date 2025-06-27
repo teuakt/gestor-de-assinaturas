@@ -1,5 +1,7 @@
 #include "gestor.h"
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -19,7 +21,10 @@ Usuario& Gestor::getUsuario() {
 void Gestor::exibirMenu() {
     int opcao = -1;
 
+    
+
     while (opcao != 0) {
+        this_thread::sleep_for(chrono::seconds(1));
         cout << "\n=== Gestor de Assinaturas de Streaming ===\n";
         cout << "1. Adicionar assinatura\n";
         cout << "2. Remover assinatura\n";
@@ -30,11 +35,11 @@ void Gestor::exibirMenu() {
         cout << "0. Sair\n";
         cout << "Escolha uma opção: ";
         cin >> opcao;
-
+        this_thread::sleep_for(chrono::milliseconds(300));
         cin.ignore();
         processarComando(opcao);
     }
-
+    this_thread::sleep_for(chrono::seconds(1));
     cout << "Encerrando o programa. Até logo!\n";
 }
 

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -37,6 +39,7 @@ void Usuario::listarAssinaturas() const {
 
     cout << "Assinaturas cadastradas:\n";
     for (const auto& a : assinaturas_) {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         a.exibir();
     }
 }

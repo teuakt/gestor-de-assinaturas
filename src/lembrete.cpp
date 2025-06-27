@@ -1,6 +1,8 @@
 #include "lembrete.h"
 #include <iostream>
 #include <ctime>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -15,12 +17,12 @@ void Lembrete::verificarRenovacoes(int diasAntecedencia) const {
     cout << "\nVerificando renovações para os próximos " << diasAntecedencia << " dias..." << endl;
     bool encontrou = false;
 
-    const vector<Assinatura>& assinaturas = usuario_.getAssinaturas();  // obtém as assinaturas
+    const vector<Assinatura>& assinaturas = usuario_.getAssinaturas();
 
     for (const auto& assinatura : assinaturas) {
         int diaRenovacao = assinatura.getDiaRenovacao();
         int diasRestantes = diaRenovacao - diaAtual;
-
+        this_thread::sleep_for(chrono::milliseconds(500));
         if (diasRestantes >= 0 && diasRestantes <= diasAntecedencia) {
             cout << "\nAtenção! A assinatura \"" << assinatura.getNome()
                  << "\" será renovada em " << diasRestantes << " dia(s)!" << endl;
@@ -29,6 +31,7 @@ void Lembrete::verificarRenovacoes(int diasAntecedencia) const {
     }
 
     if (!encontrou) {
+        this_thread::sleep_for(chrono::milliseconds(500));
         cout << "Nenhuma renovação prevista para os próximos dias." << endl;
     }
 }
