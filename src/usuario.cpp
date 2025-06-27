@@ -49,7 +49,12 @@ double Usuario::calcularGastoMensal() const {
     return total;
 }
 
-bool Usuario::salvarEmArquivo(const std::string& nomeArquivo) const {
+const vector<Assinatura>& Usuario::getAssinaturas() const {
+    return assinaturas_;
+}
+
+
+bool Usuario::salvarEmArquivo(const string& nomeArquivo) const {
     ofstream arquivo(nomeArquivo);
     if (!arquivo.is_open()) {
         return false;
@@ -63,7 +68,7 @@ bool Usuario::salvarEmArquivo(const std::string& nomeArquivo) const {
     return true;
 }
 
-bool Usuario::carregarDeArquivo(const std::string& nomeArquivo) {
+bool Usuario::carregarDeArquivo(const string& nomeArquivo) {
     ifstream arquivo(nomeArquivo);
     if (!arquivo.is_open()) {
         return false;

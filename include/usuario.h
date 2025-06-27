@@ -16,6 +16,8 @@ public:
     void listarAssinaturas() const;
     double calcularGastoMensal() const;
 
+    const std::vector<Assinatura>& getAssinaturas() const;
+
     bool salvarEmArquivo(const std::string& nomeArquivo) const;
     bool carregarDeArquivo(const std::string& nomeArquivo);
 };

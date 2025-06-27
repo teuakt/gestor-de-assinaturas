@@ -5,6 +5,15 @@ using namespace std;
 
 Gestor::Gestor() {
     usuario_.carregarDeArquivo("userData.txt");
+    
+}
+
+bool Gestor::carregarUsuario() {
+    return usuario_.carregarDeArquivo("userData.txt");
+}
+
+Usuario& Gestor::getUsuario() {
+    return usuario_;
 }
 
 void Gestor::exibirMenu() {
@@ -17,6 +26,7 @@ void Gestor::exibirMenu() {
         cout << "3. Editar assinatura\n";
         cout << "4. Listar assinaturas\n";
         cout << "5. Gerar relatorio de gastos\n";
+        cout << "6. Verificar lembretes de renovação" << endl;
         cout << "0. Sair\n";
         cout << "Escolha uma opção: ";
         cin >> opcao;
@@ -97,6 +107,14 @@ void Gestor::processarComando(int opcao) {
         case 5:
             cout << "Gasto mensal total: R$ " << usuario_.calcularGastoMensal() << "\n";
             break;
+        case 6: {
+            int dias;
+            cout << "Verificar lembretes de renovação nos próximos quantos dias? ";
+            cin >> dias;
+            Lembrete lembrete(usuario_);
+            lembrete.verificarRenovacoes(dias);
+            break;
+}
         case 0:
             break;
         default:
