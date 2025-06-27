@@ -39,7 +39,6 @@ void Gestor::exibirMenu() {
         cin.ignore();
         processarComando(opcao);
     }
-    this_thread::sleep_for(chrono::seconds(1));
     cout << "Encerrando o programa. Até logo!\n";
 }
 
