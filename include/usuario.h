@@ -11,15 +11,15 @@ private:
 
 public:
     void adicionarAssinatura(const Assinatura& assinatura);
-    bool removerAssinatura(const std::string& nome);
-    bool editarAssinatura(const std::string& nome, const Assinatura& novaAssinatura);
+    void removerAssinatura(const std::string& nome);
+    void editarAssinatura(const std::string& nome, const Assinatura& novaAssinatura);
     void listarAssinaturas() const;
     double calcularGastoMensal() const;
 
     const std::vector<Assinatura>& getAssinaturas() const;
 
-    bool salvarEmArquivo(const std::string& nomeArquivo) const;
-    bool carregarDeArquivo(const std::string& nomeArquivo);
+    void salvarEmArquivo(const std::string& nomeArquivo) const;
+    void carregarDeArquivo(const std::string& nomeArquivo);
 };
 
 #endif
