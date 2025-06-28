@@ -2,20 +2,19 @@
 #define GESTOR_H
 
 #include "usuario.h"
-#include "lembrete.h"
+#include <string>
 
 class Gestor {
-private:
-    Usuario usuario_;
-    std::vector<Assinatura> assinaturas_;
-
 public:
-    Gestor();
-    bool carregarUsuario();
+    Gestor(const std::string& arquivo_dados = "userData.txt");
+
     Usuario& getUsuario();
 
     void exibirMenu(); 
+
+private:
+    Usuario usuario_;
     void processarComando(int opcao); 
 };
 
-#endif
+#endif // GESTOR_H
