@@ -13,7 +13,11 @@ using namespace std;
 Gestor::Gestor(const std::string& arquivo_dados) {
     try {
         usuario_.carregarDeArquivo(arquivo_dados);
-    } catch (const ErroAoAbrirArquivoException& e) {}
+    } catch (const ErroAoAbrirArquivoException& e) {
+        // O catch está vazio de propósito. Se o arquivo não existir (comum na
+        // primeira execução), o programa simplesmente continua com uma lista vazia,
+        // o que é o comportamento esperado.
+    }
 } 
 
 Usuario& Gestor::getUsuario() {
@@ -35,24 +39,33 @@ void Gestor::exibirMenu() {
         
         cin >> opcao;
 
+        // Bloco para tratar entradas que não são números (ex: o usuário digita 'a').
+        // Isso impede que o programa entre em um loop infinito ou quebre.
         if (cin.fail()) {
             cerr << "ERRO: Por favor, digite um número válido.\n";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            opcao = -1;
+            cin.clear(); // Limpa o estado de erro do cin
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Descarta a entrada inválida
+            opcao = -1; // Reseta a opção para o loop continuar normalmente
             continue;
         }
 
+        // Limpa o buffer de entrada. Necessário para poder misturar leituras com
+        // `cin >> var` e `getline(cin, var)` sem problemas.
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         
         if (opcao != 0) {
             processarComando(opcao);
+            this_thread::sleep_for(chrono::milliseconds(200));
         }
     }
     cout << "Encerrando o programa. Até logo!\n";
 }
 
 void Gestor::processarComando(int opcao) {
+    // O switch direciona para a função correta.
+    // Cada caso é envolvido por um bloco try-catch para lidar com possíveis erros
+    // (dados inválidos, arquivos não encontrados, etc.) de forma controlada,
+    // mostrando uma mensagem para o usuário sem encerrar o programa.
     switch (opcao) {
         case 1: {
             try {
@@ -124,7 +137,7 @@ void Gestor::processarComando(int opcao) {
 
                 cout << "Novo valor (R$): ";
                 cin >> valorNovo;
-                 if (cin.fail()) throw runtime_error("Entrada de valor inválida.");
+                    if (cin.fail()) throw runtime_error("Entrada de valor inválida.");
 
                 cout << "Novo dia de renovação: ";
                 cin >> diaNovo;
