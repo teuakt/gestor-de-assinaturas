@@ -1,10 +1,25 @@
+// assinatura.cpp
 #include "assinatura.h"
+#include "erros.h"
 #include <iostream>
 
 using namespace std;
 
-Assinatura::Assinatura(string nome, double valor, int diaRenovacao)
-    : nome_(nome), valor_(valor), diaRenovacao_(diaRenovacao) {}
+Assinatura::Assinatura(string nome, double valor, int diaRenovacao) {
+    if (nome.empty()) {
+        throw NomeAssinaturaInvalidoException{};
+    }
+    if (valor < 0.0) {
+        throw ValorAssinaturaInvalidoException{valor};
+    }
+    if (diaRenovacao < 1 || diaRenovacao > 31) {
+        throw DiaRenovacaoInvalidoException{diaRenovacao};
+    }
+
+    nome_ = nome;
+    valor_ = valor;
+    diaRenovacao_ = diaRenovacao;
+}
 
 string Assinatura::getNome() const {
     return nome_;
@@ -19,14 +34,23 @@ int Assinatura::getDiaRenovacao() const {
 }
 
 void Assinatura::setNome(const string& nome) {
+    if (nome.empty()) {
+        throw NomeAssinaturaInvalidoException{};
+    }
     nome_ = nome;
 }
 
 void Assinatura::setValor(double valor) {
+    if (valor < 0.0) {
+        throw ValorAssinaturaInvalidoException{valor};
+    }
     valor_ = valor;
 }
 
 void Assinatura::setDiaRenovacao(int dia) {
+    if (dia < 1 || dia > 31) {
+        throw DiaRenovacaoInvalidoException{dia};
+    }
     diaRenovacao_ = dia;
 }
 
