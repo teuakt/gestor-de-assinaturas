@@ -4,7 +4,6 @@
 
 #include <string>
 
-// ---------------------------------- usuario --------------------------------- //
 struct AssinaturaJaExisteException {
     const std::string nome;
 };
@@ -23,7 +22,7 @@ struct ErroDeFormatoDeArquivoException {
     const int linha;
     const std::string conteudo;
 };
-// ---------------------------------- assinatura --------------------------------- //
+
 struct NomeAssinaturaInvalidoException {};
 
 struct ValorAssinaturaInvalidoException {
@@ -33,5 +32,5 @@ struct ValorAssinaturaInvalidoException {
 struct DiaRenovacaoInvalidoException {
     const int dia;
 };
-// ---------------------------------- assinatura --------------------------------- //
+
 #endif // ERROS_H
