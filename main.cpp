@@ -1,6 +1,6 @@
 #include "gestor.h"
 #include "lembrete.h"
-#include "erros.h" // Precisa incluir para capturar as exceções
+#include "erros.h" 
 #include <iostream>
 
 int main() {
