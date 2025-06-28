@@ -7,7 +7,8 @@
 #include <cstdio>
 
 // Uma "Fixture" é uma estrutura que prepara um ambiente de teste comum.
-// Isso garante que cada SUBCASE comece com um objeto 'usuario' limpo.
+// Isso garante que cada SUBCASE comece com um objeto 'usuario' limpo,
+// evitando que um teste interfira no outro.
 struct FixtureUsuario {
     Usuario usuario;
     Assinatura a1{"Netflix", 39.90, 10};
@@ -25,13 +26,13 @@ TEST_CASE_FIXTURE(FixtureUsuario, "Testes de Gerenciamento de Assinaturas (Adici
     SUBCASE("Lançar exceção ao tentar adicionar uma assinatura duplicada") {
         usuario.adicionarAssinatura(a1);
         CHECK_THROWS_AS(usuario.adicionarAssinatura(a1), AssinaturaJaExisteException);
-
+        // Garante que o estado do objeto não foi alterado após a exceção.
         CHECK(usuario.getAssinaturas().size() == 1);
     }
 
     SUBCASE("Remover uma assinatura existente com sucesso") {
         usuario.adicionarAssinatura(a1);
-
+        // CHECK_NOTHROW verifica se a operação bem-sucedida não lança nenhuma exceção.
         CHECK_NOTHROW(usuario.removerAssinatura("Netflix"));
         CHECK(usuario.getAssinaturas().empty() == true);
     }
@@ -39,6 +40,7 @@ TEST_CASE_FIXTURE(FixtureUsuario, "Testes de Gerenciamento de Assinaturas (Adici
     SUBCASE("Lançar exceção ao tentar remover uma assinatura inexistente") {
         usuario.adicionarAssinatura(a1);
         CHECK_THROWS_AS(usuario.removerAssinatura("Inexistente"), AssinaturaNaoEncontradaException);
+        // Verifica também se a lista não foi modificada pela operação que falhou.
         CHECK(usuario.getAssinaturas().size() == 1);
     }
 
@@ -71,12 +73,14 @@ TEST_CASE_FIXTURE(FixtureUsuario, "Testes de Gerenciamento de Assinaturas (Adici
     }
 }
 
+// Conjunto de testes focado na persistência de dados em arquivo.
 TEST_CASE("Testes de Persistência em Arquivo do Usuário") {
     const std::string NOME_ARQUIVO = "test_usuario_data.txt";
     
-
+    // Garante que o ambiente de teste está limpo antes de executar.
     remove(NOME_ARQUIVO.c_str());
 
+    // Testa o ciclo completo: um usuário salva e um segundo usuário carrega os dados.
     SUBCASE("Salvar e carregar um arquivo com sucesso") {
         Usuario u_salvar;
         u_salvar.adicionarAssinatura(Assinatura("HBO Max", 29.90, 20));
@@ -96,7 +100,7 @@ TEST_CASE("Testes de Persistência em Arquivo do Usuário") {
     }
 
     SUBCASE("Lançar exceção ao carregar arquivo corrompido") {
-
+        // Cria um arquivo de teste com formato inválido para forçar o erro.
         std::ofstream arq(NOME_ARQUIVO);
         arq << "Netflix;preco_errado;10\n";
         arq.close();
@@ -106,15 +110,17 @@ TEST_CASE("Testes de Persistência em Arquivo do Usuário") {
     }
     
     SUBCASE("Carregar um arquivo vazio resulta em lista vazia") {
-
         std::ofstream arq(NOME_ARQUIVO);
         arq.close();
 
         Usuario usuario;
-        usuario.adicionarAssinatura(Assinatura("Teste", 1.0, 1)); // Adiciona algo para garantir que será limpo
+        // Adiciona uma assinatura antes para garantir que o método carregarDeArquivo() 
+        // realmente limpa a lista.
+        usuario.adicionarAssinatura(Assinatura("Teste", 1.0, 1));
         CHECK_NOTHROW(usuario.carregarDeArquivo(NOME_ARQUIVO));
         CHECK(usuario.getAssinaturas().empty() == true);
     }
 
+    // Limpa o arquivo de teste ao final de todos os subcasos.
     remove(NOME_ARQUIVO.c_str());
 }
