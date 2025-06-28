@@ -1,4 +1,3 @@
-// assinatura.cpp
 #include "assinatura.h"
 #include "erros.h"
 #include <iostream>
@@ -6,6 +5,8 @@
 using namespace std;
 
 Assinatura::Assinatura(string nome, double valor, int diaRenovacao) {
+    // A lógica do construtor é garantir que um objeto Assinatura nunca seja
+    // criado com dados inválidos. Por isso, as checagens são feitas antes de tudo.
     if (nome.empty()) {
         throw NomeAssinaturaInvalidoException{};
     }
@@ -16,6 +17,7 @@ Assinatura::Assinatura(string nome, double valor, int diaRenovacao) {
         throw DiaRenovacaoInvalidoException{diaRenovacao};
     }
 
+    // Se todos os dados forem válidos, eles são atribuídos aos membros da classe.
     nome_ = nome;
     valor_ = valor;
     diaRenovacao_ = diaRenovacao;
